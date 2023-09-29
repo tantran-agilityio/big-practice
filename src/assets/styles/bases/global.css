@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--DM-Sans);
+}
+
+.container {
+  margin: 0 auto;
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+}
