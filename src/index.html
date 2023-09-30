@@ -5,10 +5,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="./assets/styles/main.css">
 </head>
 
 <body>
+
+  <section class="main-page container">
+
+    <div>
+      <div class="page-logo-wrapper">
+        <img class="page-logo" src="./assets/images/header-logo.svg" alt="header-logo">
+      </div>
+
+      <h1 class="page-title">To-Do List</h1>
+    </div>
+
+    <div class="modal-container modal-confirm-wrapper"></div>
+
+    <div class="modal-container modal-update-wrapper"></div>
+
+    <!--Todo column-->
+    <div class="column-status">
+      <div class="status-logo">
+        <img class="todo-img" src="./assets/images/task-logo.svg" alt="logo">
+      </div>
+      <h2 class="status-title">To&minus;Do</h2>
+      <button class="btn-add-todo" type="button">
+        <img class="img-add-todo" src="./assets/images/plus-btn.svg" alt="button">
+      </button>
+      <ul class="todo-list"></ul>
+    </div>
+
+    <!--Inprogress column-->
+    <div class="column-status">
+      <div class="status-logo">
+        <img class="inprogress-img" src="./assets/images/task-logo.svg" alt="logo">
+      </div>
+      <h2 class="status-title">In&minus;Progress</h2>
+      <button class="btn-add-inprogress" type="button">
+        <img class="img-add-inprogress" src="./assets/images/plus-btn.svg" alt="button">
+      </button>
+      <ul class="inprogress-list"></ul>
+    </div>
+
+    <!--Done column-->
+    <div class="column-status">
+      <div class="status-logo">
+        <img class="done-img" src="./assets/images/task-done-logo.svg" alt="logo">
+      </div>
+      <h2 class="status-title">Done</h2>
+      <button class="btn-add-done" type="button">
+        <img class="img-add-done" src="./assets/images/plus-btn.svg" alt="button">
+      </button>
+      <ul class="done-list"></ul>
+    </div>
+  </section>
 
   <script type="module" src="./mvc-app/index.js"></script>
 </body>
