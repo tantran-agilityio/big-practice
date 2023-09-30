@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "source": "src/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "rm -rf .parcel-cache && rm -rf dist && parcel index.html",
+    "start": "parcel src/index.html",
     "build": "parcel build"
   },
   "author": "tantran",
