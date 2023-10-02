@@ -8,14 +8,14 @@ class TaskController {
   }
 
   readData() {
-    // const newData = this.LocalStorageService.getFromLocal();
+    const taskDatas = this.model.taskDatas;
+    this.LocalStorageService.saveToLocal(taskDatas);
     this.model.restructureData(this.newData);
     return this.model.taskDatas;
   };
 
   addNewData(title, status) {
     const taskDatas = this.model.taskDatas;
-
     for (const key in taskDatas) {
       if (key == status) {
         const uniqueId = Math.floor(Math.random() * 3000);
@@ -26,7 +26,6 @@ class TaskController {
         });
       }
     }
-    console.log(taskDatas);
 
     this.LocalStorageService.saveToLocal(taskDatas);
     this.model.restructureData(this.newData);
@@ -39,15 +38,39 @@ class TaskController {
         taskDatas[key].splice(index, 1);
       }
     }
+
     this.LocalStorageService.saveToLocal(taskDatas);
     this.model.restructureData(this.newData);
   };
 
-  updateData(id, status) {
+  updateData(id, status, inputTitle, inputStatus) {
     const taskDatas = this.model.taskDatas;
     const task = this.model.getData(id, status);
     // Demo change title effect
-    // task.title = 'has changed';
+    task.title = inputTitle;
+    task.status = inputStatus;
+
+    for (const key in taskDatas) {
+      if (key == status) {
+        const statusArray = taskDatas[key];
+        for (let index = 0; index < statusArray.length; index++) {
+          const object = statusArray[index];
+          if (object.id == id) {
+            statusArray.splice(index, 1);
+            for (const key in taskDatas) {
+              if (key == object.status) {
+                const statusArray = taskDatas[key];
+                statusArray.push({
+                  id: object.id,
+                  title: object.title,
+                  status: object.status
+                });
+              }
+            }
+          }
+        }
+      }
+    }
     this.LocalStorageService.saveToLocal(taskDatas);
     this.model.restructureData(this.newData);
   };

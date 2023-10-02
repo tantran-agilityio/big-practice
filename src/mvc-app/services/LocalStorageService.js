@@ -5,7 +5,7 @@ class LocalStorageService {
   }
 
   getFromLocal() {
-    return JSON.parse(localStorage.getItem('taskDatas') || {});
+    return JSON.parse(localStorage.getItem('taskDatas'));
   }
   
 }
