@@ -20,10 +20,10 @@ class TodoView extends Observer {
 
     // Observe taskDatas in TaskModel
     this.controller.model.addObserver(this);
-  }
+  };
 
   render(data) {
-    // const todoList = document.querySelector('.todo-list');
+
     this.todoList.innerHTML = '';
     // Get todo property
     for (const key in data) {
@@ -54,9 +54,6 @@ class TodoView extends Observer {
       }
     }
   };
-
-  // const trashBtnList = document.querySelectorAll('.trash-img');
-  // console.log(trashBtnList);
 
   generateTask(data) {
     const listItem = document.createElement('li');
@@ -109,9 +106,11 @@ class TodoView extends Observer {
       <button class='btn-confirm'>Add</button>
       </div>
       `;
+      const inputStatus = document.querySelector('.input-status');
+      inputStatus.value = 'todo';
       return this.updateModal;
     }
-  }
+  };
 
   openUpdateModal(e) {
     // Get exactly data of clicked from Model
@@ -141,7 +140,7 @@ class TodoView extends Observer {
     btnCancel.addEventListener('click', (e) => {
       this.updateModal.classList.remove('show');
     })
-  }
+  };
 
   generateConfirmModal(element) {
     this.confirmModal.innerHTML = `
@@ -152,7 +151,7 @@ class TodoView extends Observer {
     </div>
     `;
     return this.confirmModal;
-  }
+  };
 
   openConfirmModal(e) {
     const trashBtn = e.target.parentNode;
@@ -174,8 +173,6 @@ class TodoView extends Observer {
           this.controller.deleteData(index, dataStatus);
         }
       }
-
-
       this.confirmModal.classList.remove('show');
     });
   };
