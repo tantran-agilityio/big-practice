@@ -77,9 +77,9 @@ class TodoView extends Observer {
   };
 
   generateUpdateModal(element) {
-    // const updateModal = document.querySelector('.modal-update-wrapper');
+
     this.updateModal.innerHTML = `
-    <div class='modal-update' data-id='${element.getAttribute('data-id')}'>
+    <div class='modal-update' data-id='${element.getAttribute('data-id')}' data-status='${element.getAttribute('data-status')}'>
     <h3 class='modal-update-title'>Add new task or Update Task</h3>
     <input class='input-title' type='text' value=''>
     <p class='create-at'></p>
@@ -98,6 +98,11 @@ class TodoView extends Observer {
   }
 
   openUpdateModal(e) {
+    // Get exactly data of clicked from Model
+    // const taskId = e.target.getAttribute('data-id');
+    // const taskStatus = e.target.getAttribute('data-status');
+    // const taskItem = this.controller.model.getData(taskId, taskStatus);
+
     this.generateUpdateModal(e.target);
     this.updateModal.classList.add('show');
     const btnConfirm = document.querySelector('.btn-confirm');
@@ -105,8 +110,15 @@ class TodoView extends Observer {
       const modal = e.target.parentNode;
       const inputTitle = modal.querySelector('.input-title');
       const inputStatus = modal.querySelector('.input-status');
-      this.controller.addNewData(inputTitle.value, inputStatus.value);
+      const dataId = modal.getAttribute('data-id');
+      const dataStatus = modal.getAttribute('data-status');
+      // this.controller.addNewData(inputTitle.value, inputStatus.value);
       this.updateModal.classList.remove('show');
+      if (dataId == 'null') {
+        this.controller.addNewData(inputTitle.value, inputStatus.value);
+      } else {
+        this.controller.updateData(dataId, dataStatus);
+      }
     });
 
     const btnCancel = document.querySelector('.btn-cancel');
