@@ -13,31 +13,22 @@ class TaskController {
     return this.model.taskDatas;
   };
 
-  addNewData(dataTitle, dataStatus) {
+  addNewData(title, status) {
     const taskDatas = this.model.taskDatas;
 
     for (const key in taskDatas) {
-      if (dataStatus == key) {
+      if (key == status) {
+        const uniqueId = Math.floor(Math.random() * 3000);
         taskDatas[key].push({
-          id: 1,
-          title: dataTitle,
-          status: dataStatus
+          id: uniqueId,
+          title: title,
+          status: status
         });
       }
     }
-
-    // for (const key in taskDatas) {
-    //   if (dataStatus == key) {
-    //     taskDatas[key].push({
-    //       id: 1,
-    //       title: dataTitle,
-    //       status: dataStatus
-    //     });
-    //   }
-    // }
+    console.log(taskDatas);
 
     this.LocalStorageService.saveToLocal(taskDatas);
-    // const newData = this.LocalStorageService.getFromLocal();
     this.model.restructureData(this.newData);
   };
 
@@ -48,6 +39,15 @@ class TaskController {
         taskDatas[key].splice(index, 1);
       }
     }
+    this.LocalStorageService.saveToLocal(taskDatas);
+    this.model.restructureData(this.newData);
+  };
+
+  updateData(id, status) {
+    const taskDatas = this.model.taskDatas;
+    const task = this.model.getData(id, status);
+    // Demo change title effect
+    // task.title = 'has changed';
     this.LocalStorageService.saveToLocal(taskDatas);
     this.model.restructureData(this.newData);
   };
