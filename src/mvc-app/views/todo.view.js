@@ -34,11 +34,6 @@ class TodoView extends Observer {
           const dataItem = dataArray[index];
           // Assign to render task function
           this.todoList.appendChild(this.generateTask(dataItem));
-          // listItem.addEventListener('click', (e) => {
-          //   if (e.target == listItem.firstElementChild) {
-          //     this.openUpdateModal(e);
-          //   }
-          // });
         }
 
         const listItem = document.querySelectorAll('.todo-task');
@@ -76,48 +71,69 @@ class TodoView extends Observer {
     return listItem;
   };
 
-  generateUpdateModal(element) {
-
-    this.updateModal.innerHTML = `
-    <div class='modal-update' data-id='${element.getAttribute('data-id')}' data-status='${element.getAttribute('data-status')}'>
-    <h3 class='modal-update-title'>Add new task or Update Task</h3>
-    <input class='input-title' type='text' value=''>
-    <p class='create-at'></p>
-    <p class='update-at'></p>
-    <select class='input-status' id='status' name='status'>
-    <option value="default">Choose a status</option>
-    <option value="todo">To-do</option>
-    <option value="inprogress">In-Progress</option>
-    <option value="done">Done</option>
-    </select>
-    <button class='btn-cancel'>Cancel</button>
-    <button class='btn-confirm'>Confirm</button>
-    </div>
-    `;
-    return this.updateModal;
+  generateUpdateModal(data) {
+    if (data) {
+      this.updateModal.innerHTML = `
+      <div class='modal-update' data-id='${data.id}' data-status='${data.status}'>
+      <h3 class='modal-update-title'>Update</h3>
+      <input class='input-title' type='text' value='${data.title}'>
+      <p class='create-at'></p>
+      <p class='update-at'></p>
+      <select class='input-status' id='status' name='status'>
+      <option value="default">Choose a status</option>
+      <option value="todo">To-do</option>
+      <option value="inprogress">In-Progress</option>
+      <option value="done">Done</option>
+      </select>
+      <button class='btn-cancel'>Cancel</button>
+      <button class='btn-confirm'>Confirm</button>
+      </div>
+      `;
+      const inputStatus = document.querySelector('.input-status');
+      inputStatus.value = data.status;
+      return this.updateModal;
+    } else {
+      this.updateModal.innerHTML = `
+      <div class='modal-update' data-id='' data-status=''>
+      <h3 class='modal-update-title'>Add new Task</h3>
+      <input class='input-title' type='text' value=''>
+      <p class='create-at'></p>
+      <p class='update-at'></p>
+      <select class='input-status' id='status' name='status'>
+      <option value="default">Choose a status</option>
+      <option value="todo">To-do</option>
+      <option value="inprogress">In-Progress</option>
+      <option value="done">Done</option>
+      </select>
+      <button class='btn-cancel'>Cancel</button>
+      <button class='btn-confirm'>Add</button>
+      </div>
+      `;
+      return this.updateModal;
+    }
   }
 
   openUpdateModal(e) {
     // Get exactly data of clicked from Model
-    // const taskId = e.target.getAttribute('data-id');
-    // const taskStatus = e.target.getAttribute('data-status');
-    // const taskItem = this.controller.model.getData(taskId, taskStatus);
+    const taskId = e.target.getAttribute('data-id');
+    const taskStatus = e.target.getAttribute('data-status');
+    const taskItem = this.controller.model.getData(taskId, taskStatus);
 
-    this.generateUpdateModal(e.target);
+    this.generateUpdateModal(taskItem);
     this.updateModal.classList.add('show');
     const btnConfirm = document.querySelector('.btn-confirm');
     btnConfirm.addEventListener('click', (e) => {
       const modal = e.target.parentNode;
       const inputTitle = modal.querySelector('.input-title');
       const inputStatus = modal.querySelector('.input-status');
-      const dataId = modal.getAttribute('data-id');
-      const dataStatus = modal.getAttribute('data-status');
-      // this.controller.addNewData(inputTitle.value, inputStatus.value);
+
       this.updateModal.classList.remove('show');
-      if (dataId == 'null') {
+      if (taskItem == undefined) {
         this.controller.addNewData(inputTitle.value, inputStatus.value);
       } else {
-        this.controller.updateData(dataId, dataStatus);
+        const dataId = taskItem.id;
+        const dataStatus = taskItem.status;
+        this.controller.updateData(dataId, dataStatus, inputTitle.value, inputStatus.value);
       }
     });
 
@@ -150,12 +166,6 @@ class TodoView extends Observer {
 
     const btnConfirmDelete = document.querySelector('.btn-confirm-delete');
     btnConfirmDelete.addEventListener('click', () => {
-      // const dataId = trashBtn.parentNode.getAttribute('data-id');
-      // this.controller.deleteData(dataId);
-      // console.log(trashBtn.parentNode);
-
-      // console.log(trashBtn.parentNode);
-
       const taskList = document.querySelectorAll('.todo-task');
 
       for (let index = 0; index < taskList.length; index++) {
