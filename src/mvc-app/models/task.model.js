@@ -5,16 +5,11 @@ class TaskModel extends Observable {
     super();
     this.taskDatas =
     {
-      todo: [
-        // { id: 1, title: 'tantran', status: 'todo' },
-        // { id: 2, title: 'ngale', status: 'todo' },
-        // { id: 3, title: 'songoku', status: 'todo' }
-      ],
+      todo: [],
       inprogress: [],
       done: []
     };
   }
-
 
   restructureData(data) {
     this.taskDatas = data;
@@ -22,19 +17,63 @@ class TaskModel extends Observable {
   }
 
   getData(id, status) {
-    for (const key in this.taskDatas) {
-      if (key == status) {
-        const statusArray = this.taskDatas[key];
-        for (let index = 0; index < statusArray.length; index++) {
-          const object = statusArray[index];
-          if (object.id == id) {
-            return object;
-          }
+    if (id && status) {
+      const target = this.taskDatas[status];
+      for (let index = 0; index < target.length; index++) {
+        const object = target[index];
+        if (object.id == id) {
+          return object;
         }
       }
     }
-  };
+  }
 
+  addNew(task, status) {
+    const target = this.taskDatas[status];
+    target.push({ ...task });
+    this.notify(this.taskDatas);
+    return this.taskDatas;
+  }
+
+  update(id, status, newTitle, newStatus) {
+    // Find object with id
+    const currentArray = this.taskDatas[status];
+    const currentTask = currentArray.find((task) => task.id == id);
+
+    // Condition display error
+    if (!currentTask) throw new Error('Task is not exist!');
+
+    // If status === new Status -> Just update content with new Title
+    if (status === newStatus) {
+      currentTask.title = newTitle;
+    } else {
+      // If status != new Status -> remove current Task -> add to new Array and update new status && new title
+      const newCurrentArray = currentArray.filter((task) => task.id !== id);
+      currentTask.title = newTitle;
+      currentTask.status = newStatus;
+      const target = this.taskDatas[newStatus];
+      target.push(currentTask);
+
+      this.taskDatas = {
+        ...this.taskDatas,
+        [`${status}`]: newCurrentArray,
+        [`${newStatus}`]: target
+      };
+    }
+    this.notify(this.taskDatas);
+    return this.taskDatas;
+  }
+
+  delete(id, status) {
+    const currentArray = this.taskDatas[status];
+    const newCurrentArray = currentArray.filter((task) => task.id != id);
+    this.taskDatas = {
+      ...this.taskDatas,
+      [`${status}`]: newCurrentArray
+    };
+    this.notify(this.taskDatas);
+    return this.taskDatas;
+  }
 }
 
 export { TaskModel };

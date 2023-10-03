@@ -8,7 +8,7 @@ class InprogressView extends Observer {
 
     // Define required elements's node in DOM
     this.updateModal = document.querySelector('.modal-update-wrapper');
-    this.todoList = document.querySelector('.inprogress-list');
+    this.inprogressList = document.querySelector('.inprogress-list');
     this.confirmModal = document.querySelector('.modal-confirm-wrapper');
     this.btnAdd = document.querySelector('.img-add-inprogress');
     this.btnAdd.addEventListener('click', (e) => { this.openUpdateModal(e) });
@@ -24,7 +24,7 @@ class InprogressView extends Observer {
 
   render(data) {
 
-    this.todoList.innerHTML = '';
+    this.inprogressList.innerHTML = '';
     // Get todo property
     for (const key in data) {
       if (key == 'inprogress') {
@@ -33,7 +33,7 @@ class InprogressView extends Observer {
         for (let index = 0; index < dataArray.length; index++) {
           const dataItem = dataArray[index];
           // Assign to render task function
-          this.todoList.appendChild(this.generateTask(dataItem));
+          this.inprogressList.appendChild(this.generateTask(dataItem));
         }
 
         const listItem = document.querySelectorAll('.inprogress-task');
@@ -77,7 +77,6 @@ class InprogressView extends Observer {
       <p class='create-at'></p>
       <p class='update-at'></p>
       <select class='input-status' id='status' name='status'>
-      <option value="default">Choose a status</option>
       <option value="todo">To-do</option>
       <option value="inprogress">In-Progress</option>
       <option value="done">Done</option>
@@ -97,7 +96,6 @@ class InprogressView extends Observer {
       <p class='create-at'></p>
       <p class='update-at'></p>
       <select class='input-status' id='status' name='status'>
-      <option value="default">Choose a status</option>
       <option value="todo">To-do</option>
       <option value="inprogress">In-Progress</option>
       <option value="done">Done</option>
@@ -122,17 +120,22 @@ class InprogressView extends Observer {
     this.updateModal.classList.add('show');
     const btnConfirm = document.querySelector('.btn-confirm');
     btnConfirm.addEventListener('click', (e) => {
+
       const modal = e.target.parentNode;
       const inputTitle = modal.querySelector('.input-title');
       const inputStatus = modal.querySelector('.input-status');
 
-      this.updateModal.classList.remove('show');
-      if (taskItem == undefined) {
-        this.controller.addNewData(inputTitle.value, inputStatus.value);
+      if (inputTitle.value) {
+        this.updateModal.classList.remove('show');
+        if (taskItem == undefined) {
+          this.controller.addNewData(inputTitle.value, inputStatus.value);
+        } else {
+          const dataId = taskItem.id;
+          const dataStatus = taskItem.status;
+          this.controller.updateData(dataId, dataStatus, inputTitle.value, inputStatus.value);
+        }
       } else {
-        const dataId = taskItem.id;
-        const dataStatus = taskItem.status;
-        this.controller.updateData(dataId, dataStatus, inputTitle.value, inputStatus.value);
+        alert('Input is empty');
       }
     });
 
@@ -169,8 +172,9 @@ class InprogressView extends Observer {
 
       for (let index = 0; index < taskList.length; index++) {
         if (trashBtn.parentNode == taskList[index]) {
+          const dataId = taskList[index].getAttribute('data-id');
           const dataStatus = taskList[index].getAttribute('data-status');
-          this.controller.deleteData(index, dataStatus);
+          this.controller.deleteData(dataId, dataStatus);
         }
       }
       this.confirmModal.classList.remove('show');
