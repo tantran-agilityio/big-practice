@@ -56,16 +56,38 @@ class DoneView extends Observer {
   };
 
   generateTask(data) {
+    const createDate = new Date(data.createDate);
+    const updateDate = new Date(data.updateDate);
     const listItem = document.createElement('li');
-    listItem.innerHTML = `
-    <div class='task done-task' data-id='${data.id}' data-status='${data.status}'>
-    <h3 class='task-title'>${data.title}</h3>
-    <button class='trash-btn'>
-    <img class='trash-img trash-img-done' src='${trashIcon}'>
-    </button>
-    </div>
-    `;
-    return listItem;
+
+    if (data.createDate === data.updateDate) {
+      listItem.innerHTML = `
+      <div class='task done-task' data-id='${data.id}' data-status='${data.status}'>
+      <h3 class='task-title'>${data.title}</h3>
+      <p class='create-date'>Create at: ${('0' + createDate.getHours()).slice(-2)}:${('0' + createDate.getMinutes()).slice(-2)}
+      ( ${('0' + (createDate.getMonth() + 1)).slice(-2)} / ${('0' + createDate.getDate()).slice(-2)} )</p>
+      <button class='trash-btn'>
+      <button class='trash-btn'>
+      <img class='trash-img trash-img-done' src='${trashIcon}'>
+      </button>
+      </div>
+      `;
+      return listItem;
+    } else {
+      listItem.innerHTML = `
+      <div class='task done-task' data-id='${data.id}' data-status='${data.status}'>
+      <h3 class='task-title'>${data.title}</h3>
+      <p class='create-date'>Create at: ${('0' + createDate.getHours()).slice(-2)}:${('0' + createDate.getMinutes()).slice(-2)}
+       ( ${('0' + (createDate.getMonth() + 1)).slice(-2)} / ${('0' + createDate.getDate()).slice(-2)} )</p>
+      <p class='update-date'>Update at: ${('0' + updateDate.getHours()).slice(-2)}:${('0' + updateDate.getMinutes()).slice(-2)}
+       ( ${('0' + (updateDate.getMonth() + 1)).slice(-2)} / ${('0' + updateDate.getDate()).slice(-2)} )</p>
+      <button class='trash-btn'>
+      <img class='trash-img trash-img-done' src='${trashIcon}'>
+      </button>
+      </div>
+      `;
+      return listItem;
+    }
   };
 
   generateUpdateModal(data) {
@@ -124,15 +146,19 @@ class DoneView extends Observer {
       const modal = e.target.parentNode;
       const inputTitle = modal.querySelector('.input-title');
       const inputStatus = modal.querySelector('.input-status');
+      const createDate = new Date();
+      let updateDate;
 
       if (inputTitle.value) {
         this.updateModal.classList.remove('show');
         if (taskItem == undefined) {
-          this.controller.addNewData(inputTitle.value, inputStatus.value);
+          updateDate = createDate;
+          this.controller.addNewData(inputTitle.value, inputStatus.value, createDate.toString(), updateDate.toString());
         } else {
+          updateDate = new Date();
           const dataId = taskItem.id;
           const dataStatus = taskItem.status;
-          this.controller.updateData(dataId, dataStatus, inputTitle.value, inputStatus.value);
+          this.controller.updateData(dataId, dataStatus, inputTitle.value, inputStatus.value, updateDate.toString());
         }
       } else {
         alert('Input is empty');

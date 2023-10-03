@@ -35,7 +35,7 @@ class TaskModel extends Observable {
     return this.taskDatas;
   }
 
-  update(id, status, newTitle, newStatus) {
+  update(id, status, newTitle, newStatus, newUpdateDate) {
     // Find object with id
     const currentArray = this.taskDatas[status];
     const currentTask = currentArray.find((task) => task.id == id);
@@ -44,13 +44,18 @@ class TaskModel extends Observable {
     if (!currentTask) throw new Error('Task is not exist!');
 
     // If status === new Status -> Just update content with new Title
+    // Then sort Array by update Date
     if (status === newStatus) {
       currentTask.title = newTitle;
+      currentTask.updateDate = newUpdateDate;
+      // Sort array by updateDate
+      currentArray.sort((objA, objB) => new Date(objA.updateDate) - new Date(objB.updateDate));
     } else {
       // If status != new Status -> remove current Task -> add to new Array and update new status && new title
       const newCurrentArray = currentArray.filter((task) => task.id !== id);
       currentTask.title = newTitle;
       currentTask.status = newStatus;
+      currentTask.updateDate = newUpdateDate;
       const target = this.taskDatas[newStatus];
       target.push(currentTask);
 
@@ -61,6 +66,7 @@ class TaskModel extends Observable {
       };
     }
     this.notify(this.taskDatas);
+
     return this.taskDatas;
   }
 
