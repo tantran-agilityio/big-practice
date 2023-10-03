@@ -1,3 +1,57 @@
 @import url(utils/index.css);
 @import url(bases/index.css);
 @import url(components/index.css);
+
+.column-status-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header-logo-wrapper {
+  width: 68px;
+  height: 68px;
+}
+
+.header-logo {
+  width: 100%;
+  height: auto;
+}
+
+.header-title {
+  color: var(--white);
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.navbar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.navbar-item {
+  color: var(--white);
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.navbar-item::before {
+  margin: -4px 16px 0 0;
+  display: inline-block;
+  content: '';
+  height: 45px;
+  width: 45px;
+  background: url('../images/check-circle.svg') no-repeat center;
+  background-size: cover;
+  vertical-align: middle;
+}

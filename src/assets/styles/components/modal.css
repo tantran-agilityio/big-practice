@@ -6,6 +6,7 @@
   top: 0;
   left: 0;
   display: block;
+  z-index: 1;
 }
 
 .modal-confirm-wrapper {
@@ -25,7 +26,84 @@
 .modal-update {
   margin: 0 auto;
   background-color: #fff;
-  max-width: 400px;
+  min-width: 400px;
+  min-height: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 16px;
+  border: 2px solid var(--primary-color);
+  background-color: var(--secondary-color);
+  text-align: center;
+}
+
+.modal-title {
+  color: var(--primary-color);
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.input-title {
+  margin: 20px 0;
+  font-size: 24px;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.input-status {
+  font-size: 20px;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0 20px 0 0;
+  vertical-align: bottom;
+  border: 2px solid black;
+  background-color: var(--white);
+}
+
+.btn-modal {
+  padding: 10px;
+  border-radius: 10px;
+  margin: 0 3px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.btn-confirm {
+  color: var(--white);
+  background-color: green;
+}
+
+
+.modal-confirm {
+  margin: 0 auto;
+  background-color: #fff;
+  min-width: 400px;
+  min-height: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 16px;
+  border: 2px solid var(--primary-color);
+  background-color: var(--secondary-color);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+
+.btn-confirm-delete {
+  color: var(--white);
+  background-color: green;
 }
 
 .show {
