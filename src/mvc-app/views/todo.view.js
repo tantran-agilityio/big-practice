@@ -77,7 +77,6 @@ class TodoView extends Observer {
       <p class='create-at'></p>
       <p class='update-at'></p>
       <select class='input-status' id='status' name='status'>
-      <option value="default">Choose a status</option>
       <option value="todo">To-do</option>
       <option value="inprogress">In-Progress</option>
       <option value="done">Done</option>
@@ -97,7 +96,6 @@ class TodoView extends Observer {
       <p class='create-at'></p>
       <p class='update-at'></p>
       <select class='input-status' id='status' name='status'>
-      <option value="default">Choose a status</option>
       <option value="todo">To-do</option>
       <option value="inprogress">In-Progress</option>
       <option value="done">Done</option>
@@ -116,23 +114,28 @@ class TodoView extends Observer {
     // Get exactly data of clicked from Model
     const taskId = e.target.getAttribute('data-id');
     const taskStatus = e.target.getAttribute('data-status');
-    const taskItem = this.controller.model.getData(taskId, taskStatus);
+    const taskItem = this.controller.model.getData(taskId, taskStatus)
 
     this.generateUpdateModal(taskItem);
     this.updateModal.classList.add('show');
     const btnConfirm = document.querySelector('.btn-confirm');
     btnConfirm.addEventListener('click', (e) => {
+
       const modal = e.target.parentNode;
       const inputTitle = modal.querySelector('.input-title');
       const inputStatus = modal.querySelector('.input-status');
 
-      this.updateModal.classList.remove('show');
-      if (taskItem == undefined) {
-        this.controller.addNewData(inputTitle.value, inputStatus.value);
+      if (inputTitle.value) {
+        this.updateModal.classList.remove('show');
+        if (taskItem == undefined) {
+          this.controller.addNewData(inputTitle.value, inputStatus.value);
+        } else {
+          const dataId = taskItem.id;
+          const dataStatus = taskItem.status;
+          this.controller.updateData(dataId, dataStatus, inputTitle.value, inputStatus.value);
+        }
       } else {
-        const dataId = taskItem.id;
-        const dataStatus = taskItem.status;
-        this.controller.updateData(dataId, dataStatus, inputTitle.value, inputStatus.value);
+        alert('Input is empty');
       }
     });
 
@@ -166,11 +169,11 @@ class TodoView extends Observer {
     const btnConfirmDelete = document.querySelector('.btn-confirm-delete');
     btnConfirmDelete.addEventListener('click', () => {
       const taskList = document.querySelectorAll('.todo-task');
-
       for (let index = 0; index < taskList.length; index++) {
         if (trashBtn.parentNode == taskList[index]) {
+          const dataId = taskList[index].getAttribute('data-id');
           const dataStatus = taskList[index].getAttribute('data-status');
-          this.controller.deleteData(index, dataStatus);
+          this.controller.deleteData(dataId, dataStatus);
         }
       }
       this.confirmModal.classList.remove('show');
