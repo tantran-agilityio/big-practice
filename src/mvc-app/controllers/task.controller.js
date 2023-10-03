@@ -18,12 +18,13 @@ class TaskController {
     }
   };
 
-  addNewData(title, status) {
+  addNewData(title, status, createDate, updateDate) {
     const uniqueId = new Date().getTime();
     const taskDatas = this.model.addNew(
-      { id: uniqueId, title, status },
+      { id: uniqueId, title, status, createDate, updateDate },
       status
     );
+
     this.LocalStorageService.saveToLocal(taskDatas);
     const newDatas = this.LocalStorageService.getFromLocal();
     this.model.restructureData(newDatas);
@@ -36,9 +37,9 @@ class TaskController {
     this.model.restructureData(newDatas);
   };
 
-  updateData(id, status, inputTitle, inputStatus) {
+  updateData(id, status, inputTitle, inputStatus, updateDate) {
     const taskDatas = this.model.update(
-      id, status, inputTitle, inputStatus
+      id, status, inputTitle, inputStatus, updateDate
     );
     this.LocalStorageService.saveToLocal(taskDatas);
     const newDatas = this.LocalStorageService.getFromLocal();
