@@ -59,9 +59,9 @@ class DoneView extends Observer {
     const listItem = document.createElement('li');
     listItem.innerHTML = `
     <div class='task done-task' data-id='${data.id}' data-status='${data.status}'>
-    <h3>${data.title}</h3>
-    <button>
-    <img class='trash-img-done' src='${trashIcon}'>
+    <h3 class='task-title'>${data.title}</h3>
+    <button class='trash-btn'>
+    <img class='trash-img trash-img-done' src='${trashIcon}'>
     </button>
     </div>
     `;
@@ -72,7 +72,7 @@ class DoneView extends Observer {
     if (data) {
       this.updateModal.innerHTML = `
       <div class='modal-update' data-id='${data.id}' data-status='${data.status}'>
-      <h3 class='modal-update-title'>Update</h3>
+      <h3 class='modal-title'>Update</h3>
       <input class='input-title' type='text' value='${data.title}'>
       <p class='create-at'></p>
       <p class='update-at'></p>
@@ -81,8 +81,8 @@ class DoneView extends Observer {
       <option value="inprogress">In-Progress</option>
       <option value="done">Done</option>
       </select>
-      <button class='btn-cancel'>Cancel</button>
-      <button class='btn-confirm'>Confirm</button>
+      <button class='btn-modal btn-cancel'>Cancel</button>
+      <button class='btn-modal btn-confirm'>Confirm</button>
       </div>
       `;
       const inputStatus = document.querySelector('.input-status');
@@ -91,8 +91,8 @@ class DoneView extends Observer {
     } else {
       this.updateModal.innerHTML = `
       <div class='modal-update' data-id='' data-status=''>
-      <h3 class='modal-update-title'>Add new Task</h3>
-      <input class='input-title' type='text' value=''>
+      <h3 class='modal-title'>Add new Task</h3>
+      <input class='input-title' type='text' value='' placeholder='Insert new title'>
       <p class='create-at'></p>
       <p class='update-at'></p>
       <select class='input-status' id='status' name='status'>
@@ -100,8 +100,8 @@ class DoneView extends Observer {
       <option value="inprogress">In-Progress</option>
       <option value="done">Done</option>
       </select>
-      <button class='btn-cancel'>Cancel</button>
-      <button class='btn-confirm'>Add</button>
+      <button class='btn-modal btn-cancel'>Cancel</button>
+      <button class='btn-modal btn-confirm'>Add</button>
       </div>
       `;
       const inputStatus = document.querySelector('.input-status');
@@ -148,9 +148,9 @@ class DoneView extends Observer {
   generateConfirmModal(element) {
     this.confirmModal.innerHTML = `
     <div class='modal-confirm' data-id='${element.getAttribute('data-id')}'>
-    <h3 class='modal-confirm-title'>Delete this Task?</h3>
-    <button class='btn-cancel-delete'>Cancel</button>
-    <button class='btn-confirm-delete'>Confirm</button>
+    <h3 class='modal-title'>Delete this Task?</h3>
+    <button class='btn-modal btn-cancel-delete'>Cancel</button>
+    <button class='btn-modal btn-confirm-delete'>Confirm</button>
     </div>
     `;
     return this.confirmModal;
