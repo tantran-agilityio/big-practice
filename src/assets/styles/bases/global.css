@@ -4,6 +4,7 @@
 
 html {
   font-family: var(--DM-Sans);
+  background-color: var(--primary-color);
 }
 
 .container {

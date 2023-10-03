@@ -1,4 +1,33 @@
 .task {
-  background-color: greenyellow;
-  margin: 5px 0;
+  margin: 24px 0;
+  padding: 18px;
+  background: var(--white-pearl);
+  position: relative;
+  border-radius: 12px;
+}
+
+.task-title {
+  margin: 0 0 16px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  color: var(--black);
+  max-width: fit-content;
+  height: fit-content;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+.trash-btn {
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  padding: 0;
+  background: transparent;
+}
+
+.trash-img {
+  width: 30px;
+  height: auto;
 }

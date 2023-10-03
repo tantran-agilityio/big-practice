@@ -1,4 +1,52 @@
 .column-status {
-  width: 300px;
-  background-color: yellow;
+  width: 400px;
+  margin: 0 20px;
+  background: var(--secondary-color);
+  padding: 20px;
+  border-radius: 16px;
+  height: fit-content;
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-content {
+  display: flex;
+}
+
+.status-logo {
+  width: 30px;
+  height: 30px;
+  margin: 0px 16px 0 0;
+}
+
+.status-img {
+  width: 100%;
+  height: auto;
+}
+
+.status-title {
+  color: var(--primary-color);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 0 10px 0 0;
+}
+
+.btn-plus {
+  margin: -3px 0 0;
+  outline: none;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  width: 35px;
+  height: 35px;
+}
+
+.img-plus {
+  width: 100%;
+  height: auto;
 }

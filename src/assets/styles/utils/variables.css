@@ -1,7 +1,11 @@
 :root {
+  /* Color */
   --primary-color: #2B1887;
   --secondary-color: #D5CCFF;
   --white-pearl: #F4F2FF;
+  --white: #fff;
+  --black: #000;
 
+    /* Fonts */
   --DM-Sans: DM-Sans;
 }
