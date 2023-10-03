@@ -62,26 +62,30 @@ class InprogressView extends Observer {
     if (data.createDate === data.updateDate) {
       listItem.innerHTML = `
       <div class='task inprogress-task' data-id='${data.id}' data-status='${data.status}'>
-      <h3 class='task-title'>${data.title}</h3>
-      <p class='create-date'>Create at: ${('0' + createDate.getHours()).slice(-2)}:${('0' + createDate.getMinutes()).slice(-2)}
-       ( ${('0' + (createDate.getMonth() + 1)).slice(-2)} / ${('0' + createDate.getDate()).slice(-2)} )</p>
-      <button class='trash-btn'>
-      <img class='trash-img trash-img-inprogress' src='${trashIcon}'>
-      </button>
+        <div>
+          <h3 class='task-title'>${data.title}</h3>
+          <p class='task-date create-date'>Create at: ${('0' + createDate.getHours()).slice(-2)}:${('0' + createDate.getMinutes()).slice(-2)}
+          ( ${('0' + (createDate.getMonth() + 1)).slice(-2)} / ${('0' + createDate.getDate()).slice(-2)} )</p>
+        </div>
+        <button class='trash-btn'>
+          <img class='trash-img trash-img-inprogress' src='${trashIcon}'>
+        </button>
       </div>
       `;
       return listItem;
     } else {
       listItem.innerHTML = `
       <div class='task inprogress-task' data-id='${data.id}' data-status='${data.status}'>
-      <h3 class='task-title'>${data.title}</h3>
-      <p class='create-date'>Create at: ${('0' + createDate.getHours()).slice(-2)}:${('0' + createDate.getMinutes()).slice(-2)}
-       ( ${('0' + (createDate.getMonth() + 1)).slice(-2)} / ${('0' + createDate.getDate()).slice(-2)} )</p>
-      <p class='update-date'>Update at: ${('0' + updateDate.getHours()).slice(-2)}:${('0' + updateDate.getMinutes()).slice(-2)}
-       ( ${('0' + (updateDate.getMonth() + 1)).slice(-2)} / ${('0' + updateDate.getDate()).slice(-2)} )</p>
-      <button class='trash-btn'>
-      <img class='trash-img trash-img-inprogress' src='${trashIcon}'>
-      </button>
+        <div>
+          <h3 class='task-title'>${data.title}</h3>
+          <p class='task-date create-date'>Create at: ${('0' + createDate.getHours()).slice(-2)}:${('0' + createDate.getMinutes()).slice(-2)}
+          ( ${('0' + (createDate.getMonth() + 1)).slice(-2)} / ${('0' + createDate.getDate()).slice(-2)} )</p>
+          <p class='task-date update-date'>Update at: ${('0' + updateDate.getHours()).slice(-2)}:${('0' + updateDate.getMinutes()).slice(-2)}
+          ( ${('0' + (updateDate.getMonth() + 1)).slice(-2)} / ${('0' + updateDate.getDate()).slice(-2)} )</p>
+        </div>
+        <button class='trash-btn'>
+          <img class='trash-img trash-img-inprogress' src='${trashIcon}'>
+        </button>
       </div>
       `;
       return listItem;
@@ -92,17 +96,21 @@ class InprogressView extends Observer {
     if (data) {
       this.updateModal.innerHTML = `
       <div class='modal-update' data-id='${data.id}' data-status='${data.status}'>
-      <h3 class='modal-title'>Update</h3>
-      <input class='input-title' type='text' value='${data.title}'>
-      <p class='create-at'></p>
-      <p class='update-at'></p>
-      <select class='input-status' id='status' name='status'>
-      <option value="todo">To-do</option>
-      <option value="inprogress">In-Progress</option>
-      <option value="done">Done</option>
-      </select>
-      <button class='btn-modal btn-cancel'>Cancel</button>
-      <button class='btn-modal btn-confirm'>Confirm</button>
+        <h3 class='modal-title'>Update</h3>
+        <input class='input-title' type='text' value='${data.title}'>
+        <p class='create-at'></p>
+        <p class='update-at'></p>
+        <div class='modal-function-wrapper'>
+          <select class='input-status' id='status' name='status'>
+            <option value="todo">To-do</option>
+            <option value="inprogress">In-Progress</option>
+            <option value="done">Done</option>
+          </select>
+          <div>
+            <button class='btn-modal btn-cancel'>Cancel</button>
+            <button class='btn-modal btn-confirm'>Confirm</button>
+          </div>
+        </div>
       </div>
       `;
       const inputStatus = document.querySelector('.input-status');
@@ -111,17 +119,21 @@ class InprogressView extends Observer {
     } else {
       this.updateModal.innerHTML = `
       <div class='modal-update' data-id='' data-status=''>
-      <h3 class='modal-title'>Add new Task</h3>
-      <input class='input-title' type='text' value='' placeholder='Insert new title'>
-      <p class='create-at'></p>
-      <p class='update-at'></p>
-      <select class='input-status' id='status' name='status'>
-      <option value="todo">To-do</option>
-      <option value="inprogress">In-Progress</option>
-      <option value="done">Done</option>
-      </select>
-      <button class='btn-modal btn-cancel'>Cancel</button>
-      <button class='btn-modal btn-confirm'>Add</button>
+        <h3 class='modal-title'>Add new Task</h3>
+        <input class='input-title' type='text' value='' placeholder='Insert new title'>
+        <p class='create-at'></p>
+        <p class='update-at'></p>
+        <div class='modal-function-wrapper'>
+          <select class='input-status' id='status' name='status'>
+            <option value="todo">To-do</option>
+            <option value="inprogress">In-Progress</option>
+            <option value="done">Done</option>
+          </select>
+          <div>
+            <button class='btn-modal btn-cancel'>Cancel</button>
+            <button class='btn-modal btn-confirm'>Add</button>
+          </div>
+        </div>
       </div>
       `;
       const inputStatus = document.querySelector('.input-status');
@@ -142,8 +154,8 @@ class InprogressView extends Observer {
     btnConfirm.addEventListener('click', (e) => {
 
       const modal = e.target.parentNode;
-      const inputTitle = modal.querySelector('.input-title');
-      const inputStatus = modal.querySelector('.input-status');
+      const inputTitle = document.querySelector('.input-title');
+      const inputStatus = document.querySelector('.input-status');
       const createDate = new Date();
       let updateDate;
 
@@ -172,9 +184,9 @@ class InprogressView extends Observer {
   generateConfirmModal(element) {
     this.confirmModal.innerHTML = `
     <div class='modal-confirm' data-id='${element.getAttribute('data-id')}'>
-    <h3 class='modal-title'>Delete this Task?</h3>
-    <button class='btn-modal btn-cancel-delete'>Cancel</button>
-    <button class='btn-modal btn-confirm-delete'>Confirm</button>
+      <h3 class='modal-title modal-confirm-title'>Delete this Task?</h3>
+      <button class='btn-modal btn-cancel-delete'>Cancel</button>
+      <button class='btn-modal btn-confirm-delete'>Confirm</button>
     </div>
     `;
     return this.confirmModal;

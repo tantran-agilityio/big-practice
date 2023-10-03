@@ -7,7 +7,18 @@
   height: fit-content;
 }
 
+.status-list {
+  max-height: 80vh;
+  overflow: auto;
+  border-radius: 12px;
+}
+
+.status-list::-webkit-scrollbar {
+  display: none;
+}
+
 .status-header {
+  margin: 0 0 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -44,6 +55,7 @@
   background-color: transparent;
   width: 35px;
   height: 35px;
+  cursor: pointer;
 }
 
 .img-plus {
