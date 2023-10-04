@@ -8,11 +8,11 @@ class TaskController {
 
   readData() {
     const newDatas = this.LocalStorageService.getFromLocal();
+    // If Local Storage is empty, push default blank format Structure of data in Model to LocalStorage
     if (newDatas == null) {
       this.LocalStorageService.saveToLocal(this.model.taskDatas);
-      console.log(this.model.taskDatas);
     } else {
-      this.LocalStorageService.saveToLocal(newDatas);
+      // If LocalStorage has datas, push datas to Model, return Model for render method
       this.model.restructureData(newDatas);
       return this.model.taskDatas;
     }
@@ -24,17 +24,12 @@ class TaskController {
       { id: uniqueId, title, status, createDate, updateDate },
       status
     );
-
     this.LocalStorageService.saveToLocal(taskDatas);
-    const newDatas = this.LocalStorageService.getFromLocal();
-    this.model.restructureData(newDatas);
   };
 
   deleteData(id, status) {
     const taskDatas = this.model.delete(id, status);
     this.LocalStorageService.saveToLocal(taskDatas);
-    const newDatas = this.LocalStorageService.getFromLocal();
-    this.model.restructureData(newDatas);
   };
 
   updateData(id, status, inputTitle, inputStatus, updateDate) {
@@ -42,8 +37,6 @@ class TaskController {
       id, status, inputTitle, inputStatus, updateDate
     );
     this.LocalStorageService.saveToLocal(taskDatas);
-    const newDatas = this.LocalStorageService.getFromLocal();
-    this.model.restructureData(newDatas);
   };
 
 }
