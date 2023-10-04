@@ -1,9 +1,12 @@
 # (JAVASCRIPT) BIG-PRACTICE
 ### - Thank you all for taking time visit and review my project ! -
 ## Description
-- Project **"Big-Practice"**: build a to-do list called *"Kanban Todo-list"*. This application will help manage personal's tasks. - using HTML5, CSS3, Javascript, MVC pattern, Local Storage.
+- Project **"Big-Practice"**: build a to-do list called *"Kanban Todo-list"*. This application will help manage personal's tasks - using HTML5, CSS3, Javascript, MVC pattern, Local Storage.
+
     - Link design: [FIGMA](https://www.figma.com/file/R2ipzucZF0E3mZOOOh2nLt/To-Do-List-Kanban-(Community)?node-id=0%3A1&mode=dev)
+
 - Time-line:
+
 	- Estimate: 6 days (September 25, 2023 -- October 02, 2023)
 	- Actual: 8 days (September 25, 2023 -- October 04, 2023)
 
