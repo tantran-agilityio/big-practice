@@ -11,54 +11,60 @@ class InprogressView extends Observer {
     this.inprogressList = document.querySelector('.inprogress-list');
     this.confirmModal = document.querySelector('.modal-confirm-wrapper');
     this.btnAdd = document.querySelector('.img-add-inprogress');
-    this.btnAdd.addEventListener('click', (e) => { this.openUpdateModal(e) });
 
-    // Load current tasks when load page
+    // Open modal when click add button
+    this.btnAdd.addEventListener('click', (event) => { this.openUpdateModal(event) });
+
+    // Render current tasks when load page
     window.addEventListener('load', () => {
       this.render(this.controller.readData());
     });
 
-    // Observe taskDatas in TaskModel
     this.controller.model.addObserver(this);
-  };
+  }
+
 
   render(data) {
-
     this.inprogressList.innerHTML = '';
-    // Get todo property
     for (const key in data) {
+      // Define inprogress array
       if (key == 'inprogress') {
         let dataArray = data[key];
-        // Loop throught todo Array - get each object in todo Array
+        // Get each object in inprogress Array
         for (let index = 0; index < dataArray.length; index++) {
           const dataItem = dataArray[index];
-          // Assign to render task function
+          // Assign object to generate task method
           this.inprogressList.appendChild(this.generateTask(dataItem));
         }
 
+        // Open update modal when click on Task
         const listItem = document.querySelectorAll('.inprogress-task');
         for (const item of listItem) {
-          item.addEventListener('click', (e) => {
-            if (e.target == item) {
-              this.openUpdateModal(e);
+          item.addEventListener('click', (event) => {
+            if (event.target == item) {
+              this.openUpdateModal(event);
             }
           });
         }
 
+        // Open confirm modal when click trash button
         const trashBtnList = document.querySelectorAll('.trash-img-inprogress');
         for (const trashBtn of trashBtnList) {
-          trashBtn.addEventListener('click', (e) => {
-            this.openConfirmModal(e);
+          trashBtn.addEventListener('click', (event) => {
+            this.openConfirmModal(event);
           });
         }
       }
     }
-  };
+  }
+
 
   generateTask(data) {
+    // Convert DateString to Date
     const createDate = new Date(data.createDate);
     const updateDate = new Date(data.updateDate);
     const listItem = document.createElement('li');
+
     if (data.createDate === data.updateDate) {
       listItem.innerHTML = `
       <div class='task inprogress-task' data-id='${data.id}' data-status='${data.status}'>
@@ -90,7 +96,8 @@ class InprogressView extends Observer {
       `;
       return listItem;
     }
-  };
+  }
+
 
   generateUpdateModal(data) {
     if (data) {
@@ -140,20 +147,36 @@ class InprogressView extends Observer {
       inputStatus.value = 'inprogress';
       return this.updateModal;
     }
-  };
+  }
 
-  openUpdateModal(e) {
+
+  generateConfirmModal(element) {
+    this.confirmModal.innerHTML = `
+    <div class='modal-confirm' data-id='${element.getAttribute('data-id')}'>
+      <h3 class='modal-title modal-confirm-title'>Delete this Task?</h3>
+      <button class='btn-modal btn-cancel-delete'>Cancel</button>
+      <button class='btn-modal btn-confirm-delete'>Confirm</button>
+    </div>
+    `;
+    return this.confirmModal;
+  }
+
+
+  openUpdateModal(event) {
     // Get exactly data of clicked from Model
-    const taskId = e.target.getAttribute('data-id');
-    const taskStatus = e.target.getAttribute('data-status');
+    const taskId = event.target.getAttribute('data-id');
+    const taskStatus = event.target.getAttribute('data-status');
     const taskItem = this.controller.model.getData(taskId, taskStatus);
 
     this.generateUpdateModal(taskItem);
     this.updateModal.classList.add('show');
     const btnConfirm = document.querySelector('.btn-confirm');
-    btnConfirm.addEventListener('click', (e) => {
 
-      const modal = e.target.parentNode;
+    // Define logic of (confirm - add) button
+    // Call addNewData if modal render Empty title
+    // Call updateData when modal get valid title
+    // Finally alert an error to prevent user input empty title
+    btnConfirm.addEventListener('click', () => {
       const inputTitle = document.querySelector('.input-title');
       const inputStatus = document.querySelector('.input-status');
       const createDate = new Date();
@@ -175,37 +198,33 @@ class InprogressView extends Observer {
       }
     });
 
+    // Hide modal when click Cancel
     const btnCancel = document.querySelector('.btn-cancel');
-    btnCancel.addEventListener('click', (e) => {
+    btnCancel.addEventListener('click', () => {
       this.updateModal.classList.remove('show');
     })
-  };
+  }
 
-  generateConfirmModal(element) {
-    this.confirmModal.innerHTML = `
-    <div class='modal-confirm' data-id='${element.getAttribute('data-id')}'>
-      <h3 class='modal-title modal-confirm-title'>Delete this Task?</h3>
-      <button class='btn-modal btn-cancel-delete'>Cancel</button>
-      <button class='btn-modal btn-confirm-delete'>Confirm</button>
-    </div>
-    `;
-    return this.confirmModal;
-  };
 
-  openConfirmModal(e) {
-    const trashBtn = e.target.parentNode;
+  openConfirmModal(event) {
+    // Define task element to set data-id for confirm modal
+    // Then assign task's id for Modal's attribute (*data-id*)
+    const trashBtn = event.target.parentNode;
     this.generateConfirmModal(trashBtn.parentNode);
     this.confirmModal.classList.add('show');
 
+    // Hide modal when click Cancel
     const btnCancelDelete = document.querySelector('.btn-cancel-delete');
     btnCancelDelete.addEventListener('click', () => {
       this.confirmModal.classList.remove('show');
     });
 
+    // Compare data-id of modal with task'id in a NodeList
+    // If true -> call deleteData to remove Task
+    // Finally hide modal
     const btnConfirmDelete = document.querySelector('.btn-confirm-delete');
     btnConfirmDelete.addEventListener('click', () => {
       const taskList = document.querySelectorAll('.inprogress-task');
-
       for (let index = 0; index < taskList.length; index++) {
         if (trashBtn.parentNode == taskList[index]) {
           const dataId = taskList[index].getAttribute('data-id');
@@ -215,7 +234,8 @@ class InprogressView extends Observer {
       }
       this.confirmModal.classList.remove('show');
     });
-  };
+  }
+  
 
   update(data) {
     this.render(data);
