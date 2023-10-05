@@ -5,9 +5,12 @@ class TaskModel extends Observable {
     super();
     this.taskDatas =
     {
-      todo: [],
-      inprogress: [],
-      done: []
+      todo: [{ id: 1696407829313, title: "nicess", status: "todo" }],
+      inprogress: [{ id: 1696405181130, title: "911 911 911", status: "inprogress" }],
+      done: [{ id: 1696407827142, title: "fsfsg", status: "done" },
+      { id: 1696405140814, title: "tan tran lasted fixed", status: "done" },
+      { id: 1696405198856, title: "tan tran is the best", status: "done" }
+      ]
     };
   }
 
