@@ -11,11 +11,13 @@ class TaskModel extends Observable {
     };
   }
 
+
   // Load data from Local Storage -> to Service -> finally this.taskDatas
   restructureData(data) {
     this.taskDatas = data;
     this.notify(this.taskDatas);
   }
+
 
   // Define exactly object in status array -> assign important information for modal tag's attribute
   // *Copy the value of the object to manipulate it through the Modal*
@@ -31,6 +33,7 @@ class TaskModel extends Observable {
     }
   }
 
+
   addNew(task, status) {
     const target = this.taskDatas[status];
     target.push({ ...task });
@@ -38,8 +41,8 @@ class TaskModel extends Observable {
     return this.taskDatas;
   }
 
+
   update(id, status, newTitle, newStatus, newUpdateDate) {
-    // Find exactly object with id
     const currentArray = this.taskDatas[status];
     const currentTask = currentArray.find((task) => task.id == id);
 
@@ -55,7 +58,7 @@ class TaskModel extends Observable {
       currentArray.sort((objA, objB) => new Date(objA.updateDate) - new Date(objB.updateDate));
     } else {
       // If Task's status != new Status -> remove current Task -> add to new Array and update new status && new title
-      const newCurrentArray = currentArray.filter((task) => task.id !== id);
+      const newCurrentArray = currentArray.filter((task) => task.id != id);
       currentTask.title = newTitle;
       currentTask.status = newStatus;
       currentTask.updateDate = newUpdateDate;
@@ -73,6 +76,7 @@ class TaskModel extends Observable {
     return this.taskDatas;
   }
 
+
   delete(id, status) {
     const currentArray = this.taskDatas[status];
     // Filter to remove Task and re-update data
@@ -83,6 +87,21 @@ class TaskModel extends Observable {
     };
     this.notify(this.taskDatas);
     return this.taskDatas;
+  }
+
+
+  openAddModal(status) {
+    this.notify({ action: "NEW_TASK", status: status });
+  }
+
+
+  openUpdateModal(task) {
+    this.notify({ action: "UPDATE_TASK", task: task });
+  }
+
+  
+  openConfirmModal(task) {
+    this.notify({ action: "DELETE_TASK", task: task });
   }
 }
 
