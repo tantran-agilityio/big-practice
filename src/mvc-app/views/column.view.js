@@ -49,7 +49,11 @@ class ColumnView extends Observer {
 
     // Render counter for status column
     const taskCounter = document.querySelector(`.${status}-counter`);
-    taskCounter.innerText = `( ${statusArray.length} )`;
+    if (statusArray.length != 0) {
+      taskCounter.innerText = `( ${statusArray.length} )`;
+    } else {
+      taskCounter.innerText = '';
+    }
   }
 
 
