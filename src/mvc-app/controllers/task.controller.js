@@ -6,17 +6,18 @@ class TaskController {
     this.LocalStorageService = new LocalStorageService();
   }
 
+
   readData() {
     const newDatas = this.LocalStorageService.getFromLocal();
-    // If Local Storage is empty, push default blank format Structure of data in Model to LocalStorage
-    if (newDatas == null) {
-      this.LocalStorageService.saveToLocal(this.model.taskDatas);
-    } else {
-      // If LocalStorage has datas, push datas to Model, return Model for render method
+    if (newDatas) {
       this.model.restructureData(newDatas);
       return this.model.taskDatas;
+    } else {
+      this.LocalStorageService.saveToLocal(this.model.taskDatas);
+      return this.model.taskDatas;
     }
-  };
+  }
+
 
   addNewData(title, status, createDate, updateDate) {
     const uniqueId = new Date().getTime();
@@ -25,20 +26,36 @@ class TaskController {
       status
     );
     this.LocalStorageService.saveToLocal(taskDatas);
-  };
+  }
+
 
   deleteData(id, status) {
     const taskDatas = this.model.delete(id, status);
     this.LocalStorageService.saveToLocal(taskDatas);
-  };
+  }
+
 
   updateData(id, status, inputTitle, inputStatus, updateDate) {
     const taskDatas = this.model.update(
       id, status, inputTitle, inputStatus, updateDate
     );
     this.LocalStorageService.saveToLocal(taskDatas);
-  };
+  }
 
+
+  openAddModal(status) {
+    this.model.openAddModal(status);
+  }
+
+
+  openUpdateModal(task) {
+    this.model.openUpdateModal(task);
+  }
+
+
+  openConfirmModal(task) {
+    this.model.openConfirmModal(task);
+  }
 }
 
 export { TaskController };
