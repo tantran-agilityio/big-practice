@@ -54,7 +54,9 @@ class ConfirmModalView extends Observer {
         this.taskStatus = data.task.getAttribute('data-status');
         this.confirmModalWrapper.classList.add('show');
         this.confirmBtn = this.confirmModal.lastElementChild;
-        this.confirmModal.lastElementChild.focus();
+        setTimeout(() => {
+          this.confirmModal.lastElementChild.focus();
+        }, 100);
       }
     }
   }
