@@ -33,9 +33,17 @@
     - Update Date
     - Delete button
 
-  - When adding and updating, the corresponding modal will be displayed
+  - When adding and updating, the corresponding Modal will be displayed
+  
+  - When click outside Modal - hide Modal
+  
+  - Auto focus to input when open Modal
 
-  - Sort Tasks based on update date
+  - There is a Counter and difference Colours number for each column
+
+  - Alert when input is blank
+
+  - Sort Tasks based on Update Date
 
   - Work fine on Chrome browser latest version
 
