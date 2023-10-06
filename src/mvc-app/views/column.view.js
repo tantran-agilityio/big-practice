@@ -34,20 +34,24 @@ class ColumnView extends Observer {
     for (let index = 0; index < statusArray.length; index++) {
       const taskObject = statusArray[index];
       const taskItem = this.column.appendChild(this.generateTask(taskObject));
+      const trashBtn = taskItem.lastElementChild.lastElementChild.firstElementChild;
 
       // Open update Modal when click on Tasks
       taskItem.addEventListener("click", (event) => {
-        if (event.target != trashBtn) {
+        if (event.target !== trashBtn) {
           this.taskController.openUpdateModal(taskObject);
+        } else {
+          const task = trashBtn.parentNode.parentNode;
+          this.taskController.openConfirmModal(task);
         }
       });
 
       // Open confirm Modal when click delete button
-      const trashBtn = taskItem.lastElementChild.lastElementChild.firstElementChild;
-      trashBtn.addEventListener("click", () => {
-        const task = trashBtn.parentNode.parentNode;
-        this.taskController.openConfirmModal(task);
-      });
+      // trashBtn.addEventListener("click", () => {
+      //   const task = trashBtn.parentNode.parentNode;
+      //   this.taskController.openConfirmModal(task);
+      // });
+
     }
 
     // Render counter for status column

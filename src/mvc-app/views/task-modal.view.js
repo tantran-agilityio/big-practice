@@ -5,23 +5,23 @@ class TaskModalView extends Observer {
   constructor(taskController) {
     super();
     this.taskController = taskController;
+    this.updateModalWrapper = document.querySelector('.modal-update-wrapper');
     this.renderModal();
-    this.modal = document.querySelector('.modal-update');
+    this.updateModal = document.querySelector('.modal-update');
     this.taskController.model.addObserver(this);
   }
 
-  renderModal() {
-    this.updateModal = document.querySelector(".modal-update-wrapper");
 
+  renderModal() {
     // Hide Modal when click on outside
-    this.updateModal.addEventListener('click', (event) => {
-      if (event.target == this.updateModal) {
-        this.updateModal.classList.remove("show");
+    this.updateModalWrapper.addEventListener('click', (event) => {
+      if (event.target == this.updateModalWrapper) {
+        this.updateModalWrapper.classList.remove("show");
       }
     });
 
     // Render
-    this.updateModal.innerHTML = `
+    this.updateModalWrapper.innerHTML = `
       <div class='modal-update'>
         <h3 class='modal-title'>Add new Task</h3>
         <input class='input-title' type='text' value='' placeholder='Insert new title'>
@@ -44,14 +44,14 @@ class TaskModalView extends Observer {
     // Hide modal when click Cancel
     this.btnCancel = document.querySelector(".btn-cancel");
     this.btnCancel.addEventListener("click", () => {
-      this.modal.removeAttribute('data-id');
-      this.updateModal.classList.remove("show");
+      this.updateModal.removeAttribute('data-id');
+      this.updateModalWrapper.classList.remove("show");
     });
 
     // Execute action when click confirm button
     this.btnConfirm = document.querySelector(".btn-confirm");
     this.btnConfirm.addEventListener("click", () => {
-      if (this.modal.getAttribute('data-id') == null) {
+      if (this.updateModal.getAttribute('data-id') == null) {
         this.currentAction = NEW_TASK
         if (this.inputTitle.value.trim() == '') {
           alert('Input is Empty!');
@@ -63,7 +63,7 @@ class TaskModalView extends Observer {
             createdDate.toString(),
             createdDate.toString()
           );
-          this.updateModal.classList.remove("show");
+          this.updateModalWrapper.classList.remove("show");
         }
       } else {
         this.currentAction = UPDATE_TASK
@@ -78,23 +78,23 @@ class TaskModalView extends Observer {
             this.inputStatus.value,
             updateDate.toString()
           );
-          this.modal.removeAttribute('data-id');
-          this.updateModal.classList.remove("show");
+          this.updateModal.removeAttribute('data-id');
+          this.updateModalWrapper.classList.remove("show");
         }
       }
     });
-    this.modalTitle = document.querySelector(".modal-title");
+    this.updateModalTitle = document.querySelector(".modal-title");
     this.inputStatus = document.querySelector(".input-status");
     this.inputTitle = document.querySelector(".input-title");
 
-    // Trigger Button Click on Enter
+    // Trigger Button Confirm on Enter
     this.inputTitle.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         this.btnConfirm.click();
-        console.log('cliked');
       }
     });
   }
+
 
   update(data) {
     if (data.hasOwnProperty("action")) {
@@ -106,9 +106,9 @@ class TaskModalView extends Observer {
             this.inputTitle.value = "";
             this.inputStatus.value = data.status;
 
-            this.modalTitle.innerHTML = "Add New Task";
+            this.updateModalTitle.innerHTML = "Add New Task";
             this.btnConfirm.innerHTML = "Add";
-            this.updateModal.classList.add("show");
+            this.updateModalWrapper.classList.add("show");
             this.inputTitle.focus();
           }
           break;
@@ -117,7 +117,7 @@ class TaskModalView extends Observer {
           {
             this.currentAction = UPDATE_TASK;
 
-            this.modal.setAttribute('data-id', `${data.task.id}`);
+            this.updateModal.setAttribute('data-id', `${data.task.id}`);
 
             this.taskId = data.task.id;
             this.currentStatus = data.task.status;
@@ -125,10 +125,9 @@ class TaskModalView extends Observer {
             this.inputTitle.value = data.task.title;
             this.inputStatus.value = data.task.status;
 
-
-            this.modalTitle.innerHTML = "Update Task";
+            this.updateModalTitle.innerHTML = "Update Task";
             this.btnConfirm.innerHTML = "Confirm";
-            this.updateModal.classList.add("show");
+            this.updateModalWrapper.classList.add("show");
             this.inputTitle.focus();
           }
           break;

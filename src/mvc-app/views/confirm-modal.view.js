@@ -6,44 +6,45 @@ class ConfirmModalView extends Observer {
     super();
     this.taskController = taskController;
     this.currentAction = DELETE_TASK;
-    this.confirmModal = document.querySelector('.modal-confirm-wrapper');
-
-    this.renderModal();
-
+    this.confirmModalWrapper = document.querySelector('.modal-confirm-wrapper');
+    this.renderConfirmModal();
+    this.confirmModal = document.querySelector('.modal-confirm')
     this.taskController.model.addObserver(this);
   }
 
+
   // Render default layout of Confirm Modal and add Event Listener for buttons
-  renderModal() {
+  renderConfirmModal() {
 
     // Hide Modal when click on outside
-    this.confirmModal.addEventListener('click', (event) => {
-      if (event.target == this.confirmModal) {
-        this.confirmModal.classList.remove('show');
+    this.confirmModalWrapper.addEventListener('click', (event) => {
+      if (event.target == this.confirmModalWrapper) {
+        this.confirmModalWrapper.classList.remove('show');
       }
     });
 
     // Render
-    this.confirmModal.innerHTML = `
+    this.confirmModalWrapper.innerHTML = `
     <div class='modal-confirm' data-id='${this.taskId}'>
       <h3 class='modal-title modal-confirm-title'>Delete this Task?</h3>
-      <button class='btn-modal btn-confirm-cancel'>Cancel</button>
-      <button class='btn-modal btn-confirm-delete'>Confirm</button>
+      <button class='btn-modal btn-confirm-cancel' type='button'>Cancel</button>
+      <button class='btn-modal btn-confirm-delete' type='button'>Confirm</button>
     </div>`;
 
     // Hide Modal when click Cancel button
     this.btnCancel = document.querySelector('.btn-confirm-cancel');
     this.btnCancel.addEventListener('click', () => {
-      this.confirmModal.classList.remove('show');
+      this.confirmModalWrapper.classList.remove('show');
     });
 
     // Execute action when click confirm button
     this.btnConfirmDelete = document.querySelector('.btn-confirm-delete');
     this.btnConfirmDelete.addEventListener('click', () => {
       this.taskController.deleteData(this.taskId, this.taskStatus);
-      this.confirmModal.classList.remove('show');
+      this.confirmModalWrapper.classList.remove('show');
     });
   }
+
 
   update(data) {
     if (data.hasOwnProperty("action")) {
@@ -51,7 +52,9 @@ class ConfirmModalView extends Observer {
         this.currentAction = DELETE_TASK;
         this.taskId = data.task.getAttribute('data-id');
         this.taskStatus = data.task.getAttribute('data-status');
-        this.confirmModal.classList.add('show');
+        this.confirmModalWrapper.classList.add('show');
+        this.confirmBtn = this.confirmModal.lastElementChild;
+        this.confirmModal.lastElementChild.focus();
       }
     }
   }
