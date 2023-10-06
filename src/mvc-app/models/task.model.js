@@ -19,21 +19,6 @@ class TaskModel extends Observable {
   }
 
 
-  // Define exactly object in status array -> assign important information for modal tag's attribute
-  // *Copy the value of the object to manipulate it through the Modal*
-  getData(id, status) {
-    if (id && status) {
-      const target = this.taskDatas[status];
-      for (let index = 0; index < target.length; index++) {
-        const object = target[index];
-        if (object.id == id) {
-          return object;
-        }
-      }
-    }
-  }
-
-
   addNew(task, status) {
     const target = this.taskDatas[status];
     target.push({ ...task });
@@ -100,7 +85,7 @@ class TaskModel extends Observable {
   }
 
   
-  openConfirmModal(task) {
+  openConfirmModal(task, event) {
     this.notify({ action: "DELETE_TASK", task: task });
   }
 }
