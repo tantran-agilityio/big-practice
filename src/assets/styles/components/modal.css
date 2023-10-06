@@ -11,6 +11,9 @@
 
 .modal-update-wrapper {
   visibility: hidden;
+  opacity: 0;
+  transform: translate(0) scale(1);
+  transition: all 0.1s;
 }
 
 .modal-update {
@@ -70,6 +73,9 @@
 
 .modal-confirm-wrapper {
   visibility: hidden;
+  opacity: 0;
+  transform: translate(0%) scale(1);
+  transition: all 0.1s;
 }
 
 .modal-confirm {
@@ -109,4 +115,6 @@
 
 .show {
   visibility: visible;
+  opacity: 1;
+  transform: translate(0%) scale(1.1);
 }

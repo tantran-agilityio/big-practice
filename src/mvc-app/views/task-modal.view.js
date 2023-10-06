@@ -109,7 +109,9 @@ class TaskModalView extends Observer {
             this.updateModalTitle.innerHTML = "Add New Task";
             this.btnConfirm.innerHTML = "Add";
             this.updateModalWrapper.classList.add("show");
-            this.inputTitle.focus();
+            setTimeout(() => {
+              this.inputTitle.focus();
+            }, 100);
           }
           break;
 
@@ -128,7 +130,9 @@ class TaskModalView extends Observer {
             this.updateModalTitle.innerHTML = "Update Task";
             this.btnConfirm.innerHTML = "Confirm";
             this.updateModalWrapper.classList.add("show");
-            this.inputTitle.focus();
+            setTimeout(() => {
+              this.inputTitle.focus();
+            }, 100);
           }
           break;
       }
