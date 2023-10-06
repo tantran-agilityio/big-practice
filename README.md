@@ -8,7 +8,7 @@
 - Time-line:
 
 	- Estimate: 6 days (September 25, 2023 -- October 02, 2023)
-	- Actual: 8 days (September 25, 2023 -- October 04, 2023)
+	- Actual: 9 days (September 25, 2023 -- October 05, 2023)
 
 ## Overview
 - Requirements of Todo-list:
@@ -75,6 +75,8 @@
             |- main.css
 
     |- mvc-app/
+        |- constant/
+            |- actions.js
         |- controllers/
             |- task.controller.js
         |- models/
@@ -84,9 +86,9 @@
             |- LocalStorageService.js
         |- views/
             |- observer.js
-            |- done.view.js
-            |- inprogress.view.js
-            |- todo.view.js
+            |- column.view.js
+            |- task-modal.view.js
+            |- confirm-modal.view.js
         |- index.js
     
     |- index.html
