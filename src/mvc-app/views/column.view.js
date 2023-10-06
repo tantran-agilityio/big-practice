@@ -45,13 +45,6 @@ class ColumnView extends Observer {
           this.taskController.openConfirmModal(task);
         }
       });
-
-      // Open confirm Modal when click delete button
-      // trashBtn.addEventListener("click", () => {
-      //   const task = trashBtn.parentNode.parentNode;
-      //   this.taskController.openConfirmModal(task);
-      // });
-
     }
 
     // Render counter for status column
