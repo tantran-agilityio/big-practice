@@ -1,5 +1,5 @@
 import Observer from "./observer.js";
-import { DELETE_TASK } from "../constant/actions.js";
+import { DELETE_TASK } from "../constants/actions.js";
 
 class ConfirmModalView extends Observer {
   constructor(taskController) {

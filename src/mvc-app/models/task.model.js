@@ -5,9 +5,9 @@ class TaskModel extends Observable {
     super();
     this.taskDatas =
     {
-      todo: [],
-      inprogress: [],
-      done: []
+      // todo: [],
+      // inprogress: [],
+      // done: []
     };
   }
 

@@ -1,5 +1,5 @@
 import Observer from './observer.js';
-import { NEW_TASK, UPDATE_TASK } from "../constant/actions.js";
+import { NEW_TASK, UPDATE_TASK } from "../constants/actions.js";
 
 class TaskModalView extends Observer {
   constructor(taskController) {

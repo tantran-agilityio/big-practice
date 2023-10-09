@@ -1,21 +1,18 @@
-import { LocalStorageService } from "../services/LocalStorageService.js";
+// import { LocalStorageService } from "../services/LocalStorageService.js";
+import { JsonServerService } from "../services/json-server-service.js";
 
 class TaskController {
   constructor(model) {
     this.model = model;
-    this.LocalStorageService = new LocalStorageService();
+    // this.LocalStorageService = new LocalStorageService();
+    this.JsonServerService = new JsonServerService();
   }
 
 
-  readData() {
-    const newDatas = this.LocalStorageService.getFromLocal();
-    if (newDatas) {
-      this.model.restructureData(newDatas);
-      return this.model.taskDatas;
-    } else {
-      this.LocalStorageService.saveToLocal(this.model.taskDatas);
-      return this.model.taskDatas;
-    }
+  readData = async () => {
+    const newDatas = (await this.JsonServerService.getData());
+    this.model.restructureData(newDatas);
+    return newDatas;
   }
 
 
@@ -25,7 +22,9 @@ class TaskController {
       { id: uniqueId, title, status, createDate, updateDate },
       status
     );
+    console.log(taskDatas);
     this.LocalStorageService.saveToLocal(taskDatas);
+    console.log(this.model.taskDatas);
   }
 
 

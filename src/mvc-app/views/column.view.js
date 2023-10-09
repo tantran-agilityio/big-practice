@@ -17,8 +17,9 @@ class ColumnView extends Observer {
     });
 
     // Render current tasks from Local Storage when load page
-    window.addEventListener('load', () => {
-      this.render(this.taskController.readData(), this.status);
+    window.addEventListener('load', async () => {
+      // console.log(await this.taskController.readData(this.status));
+      this.render(await this.taskController.readData(), this.status);
     });
 
     this.taskController.model.addObserver(this);
