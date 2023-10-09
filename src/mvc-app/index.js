@@ -16,6 +16,12 @@ function main() {
   // Modal's Views
   let addAndUpdateModalView = new TaskModalView(taskController);
   let confirmModalView = new ConfirmModalView(taskController);
+
+  // Render current tasks from Local Storage when load page
+  window.addEventListener('load', () => {
+    taskController.readData();
+    console.log(taskModel.taskDatas);
+  });
 }
 
 main();
