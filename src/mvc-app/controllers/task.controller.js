@@ -2,59 +2,55 @@
 import { JsonServerService } from "../services/json-server-service.js";
 
 class TaskController {
-  constructor(model) {
-    this.model = model;
-    // this.LocalStorageService = new LocalStorageService();
-    this.JsonServerService = new JsonServerService();
-  }
+	constructor(model) {
+		this.model = model;
+		// this.LocalStorageService = new LocalStorageService();
+		this.JsonServerService = new JsonServerService();
+	}
 
+	readData = async () => {
+		const newDatas = await this.JsonServerService.getData();
+		this.model.restructureData(newDatas);
+		return newDatas;
+	};
 
-  readData = async () => {
-    const newDatas = (await this.JsonServerService.getData());
-    this.model.restructureData(newDatas);
-    return newDatas;
-  }
+	async addNewData(title, status, createDate, updateDate) {
+		const uniqueId = new Date().getTime();
+		const data = { id: uniqueId, title, status, createDate, updateDate };
+		const taskDatas = this.model.addNew(data, status);
+		console.log(taskDatas);
+		// this.LocalStorageService.saveToLocal(taskDatas);
+		console.log(this.model.taskDatas);
+		await this.JsonServerService.add(data);
+	}
 
+	deleteData(id, status) {
+		const taskDatas = this.model.delete(id, status);
+		this.LocalStorageService.saveToLocal(taskDatas);
+	}
 
-  addNewData(title, status, createDate, updateDate) {
-    const uniqueId = new Date().getTime();
-    const taskDatas = this.model.addNew(
-      { id: uniqueId, title, status, createDate, updateDate },
-      status
-    );
-    console.log(taskDatas);
-    this.LocalStorageService.saveToLocal(taskDatas);
-    console.log(this.model.taskDatas);
-  }
+	updateData(id, status, inputTitle, inputStatus, updateDate) {
+		const taskDatas = this.model.update(
+			id,
+			status,
+			inputTitle,
+			inputStatus,
+			updateDate
+		);
+		this.LocalStorageService.saveToLocal(taskDatas);
+	}
 
+	openAddModal(status) {
+		this.model.openAddModal(status);
+	}
 
-  deleteData(id, status) {
-    const taskDatas = this.model.delete(id, status);
-    this.LocalStorageService.saveToLocal(taskDatas);
-  }
+	openUpdateModal(task) {
+		this.model.openUpdateModal(task);
+	}
 
-
-  updateData(id, status, inputTitle, inputStatus, updateDate) {
-    const taskDatas = this.model.update(
-      id, status, inputTitle, inputStatus, updateDate
-    );
-    this.LocalStorageService.saveToLocal(taskDatas);
-  }
-
-
-  openAddModal(status) {
-    this.model.openAddModal(status);
-  }
-
-
-  openUpdateModal(task) {
-    this.model.openUpdateModal(task);
-  }
-
-
-  openConfirmModal(task) {
-    this.model.openConfirmModal(task);
-  }
+	openConfirmModal(task) {
+		this.model.openConfirmModal(task);
+	}
 }
 
 export { TaskController };
