@@ -1,0 +1,28 @@
+{
+  "todo": [
+    {
+      "id": 1696838711621,
+      "title": "mớihgffg",
+      "status": "todo",
+      "createDate": "Mon Oct 09 2023 15:05:11 GMT+0700 (Indochina Time)",
+      "updateDate": "Mon Oct 09 2023 15:06:00 GMT+0700 (Indochina Time)"
+    },
+    {
+      "id": 1696838757467,
+      "title": "fâfa",
+      "status": "todo",
+      "createDate": "Mon Oct 09 2023 15:05:57 GMT+0700 (Indochina Time)",
+      "updateDate": "Mon Oct 09 2023 15:05:57 GMT+0700 (Indochina Time)"
+    }
+  ],
+  "inprogress": [
+    {
+      "id": 1696836412840,
+      "title": "tạo mới 4",
+      "status": "inprogress",
+      "createDate": "Mon Oct 09 2023 14:26:52 GMT+0700 (Indochina Time)",
+      "updateDate": "Mon Oct 09 2023 14:26:52 GMT+0700 (Indochina Time)"
+    }
+  ],
+  "done": []
+}

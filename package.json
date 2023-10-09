@@ -5,6 +5,7 @@
   "source": "src/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "json-server --watch src/mvc-app/server/database.json",
     "start": "rm -rf .parcel-cache && rm -rf dist && parcel src/index.html",
     "build": "rm -rf build && rm -rf .parcel-cache && parcel build ./src/*.html --no-cache --no-source-maps --dist-dir dist"
   },
@@ -14,5 +15,8 @@
     "eslint": "^8.50.0",
     "eslint-config-google": "^0.14.0",
     "parcel": "^2.9.3"
+  },
+  "dependencies": {
+    "json-server": "^0.17.4"
   }
 }

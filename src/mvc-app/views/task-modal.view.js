@@ -1,5 +1,5 @@
 import Observer from './observer.js';
-import { NEW_TASK, UPDATE_TASK } from "../constant/actions.js";
+import { NEW_TASK, UPDATE_TASK } from "../constants/actions.js";
 
 class TaskModalView extends Observer {
   constructor(taskController) {
@@ -50,18 +50,18 @@ class TaskModalView extends Observer {
 
     // Execute action when click confirm button
     this.btnConfirm = document.querySelector(".btn-confirm");
-    this.btnConfirm.addEventListener("click", () => {
+    this.btnConfirm.addEventListener("click", async () => {
       if (this.updateModal.getAttribute('data-id') == null) {
         this.currentAction = NEW_TASK
         if (this.inputTitle.value.trim() == '') {
           alert('Input is Empty!');
         } else {
-          const createdDate = new Date();
-          this.taskController.addNewData(
+          const createDate = new Date();
+          await this.taskController.addNewData(
             this.inputTitle.value,
             this.inputStatus.value,
-            createdDate.toString(),
-            createdDate.toString()
+            createDate.toString(),
+            createDate.toString()
           );
           this.updateModalWrapper.classList.remove("show");
         }
@@ -71,11 +71,12 @@ class TaskModalView extends Observer {
           alert('Input is Empty!');
         } else {
           const updateDate = new Date();
-          this.taskController.updateData(
+          await this.taskController.updateData(
             this.taskId,
             this.currentStatus,
             this.inputTitle.value,
             this.inputStatus.value,
+            this.createDate,
             updateDate.toString()
           );
           this.updateModal.removeAttribute('data-id');
@@ -123,6 +124,7 @@ class TaskModalView extends Observer {
 
             this.taskId = data.task.id;
             this.currentStatus = data.task.status;
+            this.createDate = data.task.createDate;
 
             this.inputTitle.value = data.task.title;
             this.inputStatus.value = data.task.status;

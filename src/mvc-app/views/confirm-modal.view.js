@@ -1,5 +1,5 @@
 import Observer from "./observer.js";
-import { DELETE_TASK } from "../constant/actions.js";
+import { DELETE_TASK } from "../constants/actions.js";
 
 class ConfirmModalView extends Observer {
   constructor(taskController) {
@@ -39,8 +39,8 @@ class ConfirmModalView extends Observer {
 
     // Execute action when click confirm button
     this.btnConfirmDelete = document.querySelector('.btn-confirm-delete');
-    this.btnConfirmDelete.addEventListener('click', () => {
-      this.taskController.deleteData(this.taskId, this.taskStatus);
+    this.btnConfirmDelete.addEventListener('click', async () => {
+      await this.taskController.deleteData(this.taskId, this.taskStatus);
       this.confirmModalWrapper.classList.remove('show');
     });
   }

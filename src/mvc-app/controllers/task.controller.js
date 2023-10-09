@@ -1,45 +1,48 @@
-import { LocalStorageService } from "../services/LocalStorageService.js";
+import { JsonServerService } from "../services/json-server-service.js";
 
 class TaskController {
   constructor(model) {
     this.model = model;
-    this.LocalStorageService = new LocalStorageService();
+    this.JsonServerService = new JsonServerService();
   }
 
 
-  readData() {
-    const newDatas = this.LocalStorageService.getFromLocal();
-    if (newDatas) {
-      this.model.restructureData(newDatas);
-      return this.model.taskDatas;
-    } else {
-      this.LocalStorageService.saveToLocal(this.model.taskDatas);
-      return this.model.taskDatas;
-    }
+  async readData() {
+    // const newDatas = this.LocalStorageService.getFromLocal();
+    // if (newDatas) {
+    //   this.model.restructureData(newDatas);
+    //   return this.model.taskDatas;
+    // } else {
+    //   this.LocalStorageService.saveToLocal(this.model.taskDatas);
+    //   return this.model.taskDatas;
+    // }
+    const newDatas = await this.JsonServerService.get();
+    this.model.restructureData(newDatas);
+    return newDatas;
   }
 
 
-  addNewData(title, status, createDate, updateDate) {
+  async addNewData(title, status, createDate, updateDate) {
     const uniqueId = new Date().getTime();
-    const taskDatas = this.model.addNew(
-      { id: uniqueId, title, status, createDate, updateDate },
-      status
-    );
-    this.LocalStorageService.saveToLocal(taskDatas);
+    const newData = { id: uniqueId, title, status, createDate, updateDate };
+    this.model.addNew(newData, status);
+    await this.JsonServerService.add(newData);
   }
 
 
-  deleteData(id, status) {
-    const taskDatas = this.model.delete(id, status);
-    this.LocalStorageService.saveToLocal(taskDatas);
+  async updateData(id, currentStatus, title, status, createDate, updateDate) {
+    const data = { id, title, status, createDate, updateDate };
+    this.model.update(id, currentStatus, title, status, updateDate);
+    // this.LocalStorageService.saveToLocal(taskDatas);
+    await this.JsonServerService.update(data, currentStatus);
   }
 
 
-  updateData(id, status, inputTitle, inputStatus, updateDate) {
-    const taskDatas = this.model.update(
-      id, status, inputTitle, inputStatus, updateDate
-    );
-    this.LocalStorageService.saveToLocal(taskDatas);
+  async deleteData(id, status) {
+    const data = { id, status };
+    this.model.delete(id, status);
+    // this.LocalStorageService.saveToLocal(id);
+    await this.JsonServerService.delete(data);
   }
 
 

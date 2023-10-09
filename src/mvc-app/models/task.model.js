@@ -3,12 +3,7 @@ import Observable from './observable.js';
 class TaskModel extends Observable {
   constructor() {
     super();
-    this.taskDatas =
-    {
-      todo: [],
-      inprogress: [],
-      done: []
-    };
+    this.taskDatas = {};
   }
 
 
@@ -23,7 +18,7 @@ class TaskModel extends Observable {
     const target = this.taskDatas[status];
     target.push({ ...task });
     this.notify(this.taskDatas);
-    return this.taskDatas;
+    // return this.taskDatas;
   }
 
 
@@ -58,7 +53,7 @@ class TaskModel extends Observable {
       };
     }
     this.notify(this.taskDatas);
-    return this.taskDatas;
+    // return this.taskDatas;
   }
 
 
@@ -71,7 +66,7 @@ class TaskModel extends Observable {
       [`${status}`]: newCurrentArray
     };
     this.notify(this.taskDatas);
-    return this.taskDatas;
+    // return this.taskDatas;
   }
 
 
