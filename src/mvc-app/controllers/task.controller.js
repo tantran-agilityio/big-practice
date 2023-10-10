@@ -7,7 +7,7 @@ class TaskController {
   }
 
 
-  async readData() {
+  async readData(status) {
     // const newDatas = this.LocalStorageService.getFromLocal();
     // if (newDatas) {
     //   this.model.restructureData(newDatas);
@@ -16,9 +16,8 @@ class TaskController {
     //   this.LocalStorageService.saveToLocal(this.model.taskDatas);
     //   return this.model.taskDatas;
     // }
-    const newDatas = await this.JsonServerService.get();
-    this.model.restructureData(newDatas);
-    return newDatas;
+    const newDatas = await this.JsonServerService.get(status);
+    this.model.restructureData(newDatas, status);
   }
 
 

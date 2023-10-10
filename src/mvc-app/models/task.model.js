@@ -3,13 +3,17 @@ import Observable from './observable.js';
 class TaskModel extends Observable {
   constructor() {
     super();
-    this.taskDatas = {};
+    this.taskDatas = {
+			todo: [],
+			inprogress: [],
+			done: []
+		};
   }
 
 
   // Load data from Local Storage -> to Service -> finally this.taskDatas
-  restructureData(data) {
-    this.taskDatas = data;
+  restructureData(data, status) {
+		this.taskDatas[status] = data;
     this.notify(this.taskDatas);
   }
 
@@ -18,7 +22,6 @@ class TaskModel extends Observable {
     const target = this.taskDatas[status];
     target.push({ ...task });
     this.notify(this.taskDatas);
-    // return this.taskDatas;
   }
 
 
@@ -79,7 +82,7 @@ class TaskModel extends Observable {
     this.notify({ action: "UPDATE_TASK", task: task });
   }
 
-  
+
   openConfirmModal(task, event) {
     this.notify({ action: "DELETE_TASK", task: task });
   }
