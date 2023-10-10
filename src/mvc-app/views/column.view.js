@@ -16,6 +16,10 @@ class ColumnView extends Observer {
       this.taskController.openAddModal(this.status);
     });
 
+		window.addEventListener("load", async () => {
+			taskController.readData(this.status);
+		});
+
     this.taskController.model.addObserver(this);
   }
 

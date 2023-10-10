@@ -18,9 +18,9 @@ function main() {
   let confirmModalView = new ConfirmModalView(taskController);
 
   // Render current tasks from Local Storage when load page
-  window.addEventListener("load", async () => {
-    taskController.readData();
-  });
+  // window.addEventListener("load", async () => {
+	// 	taskController.readData();
+  // });
 }
 
 main();
